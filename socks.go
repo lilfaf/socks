@@ -45,6 +45,7 @@ import (
 	"fmt"
 	"net"
 	"strconv"
+	"time"
 )
 
 // Constants to choose which version of SOCKS protocol to use.
@@ -72,7 +73,7 @@ func DialSocksProxy(socksType int, proxy string) func(string, string) (net.Conn,
 
 func dialSocks5(proxy, targetAddr string) (conn net.Conn, err error) {
 	// dial TCP
-	conn, err = net.Dial("tcp", proxy)
+	conn, err = net.DialTimeout("tcp", proxy, 5*time.Second)
 	if err != nil {
 		return
 	}
